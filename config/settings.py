@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -37,6 +41,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Third-party
+    "rest_framework",
+    "drf_spectacular",
+    # Local
+    "weather",
+    "alerts",
+    "webhooks",
+
+
 ]
 
 MIDDLEWARE = [
@@ -105,7 +119,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = "Africa/Nairobi"
 
 USE_I18N = True
 
@@ -121,3 +135,27 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+# REST Framework 
+REST_FRAMEWORK = {
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "DEFAULT_RENDERER_CLASSES": ["rest_framework.renderers.JSONRenderer"],
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 20,
+    "EXCEPTION_HANDLER": "core.exceptions.custom_exception_handler",
+}
+
+# drf-spectacular (OpenAPI) 
+SPECTACULAR_SETTINGS = {
+    "TITLE": "WeatherAI Integration API",
+    "DESCRIPTION": "Backend service integrating WeatherAI APIs — weather data, alerts, and webhooks.",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+}
+
+# ── WeatherAI ───────────────────────────────────────────────────
+WEATHERAI_API_KEY = os.getenv("WEATHERAI_API_KEY", "")
+WEATHERAI_BASE_URL = "https://api.weather-ai.co"
+WEATHERAI_TIMEOUT = 10  # seconds
