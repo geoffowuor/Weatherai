@@ -345,32 +345,7 @@ For checks without external WeatherAI calls:
 python manage.py check
 ```
 
-## Production Notes
 
-For deployment, set environment variables outside the repository rather than relying on a local `.env` file.
-
-Minimum production environment:
-
-```env
-WEATHERAI_API_KEY=your_real_weatherai_api_key
-DJANGO_SETTINGS_MODULE=config.settings
-```
-
-Recommended hardening before production:
-
-- Move `SECRET_KEY` to an environment variable.
-- Set `DEBUG=False`.
-- Configure `ALLOWED_HOSTS`.
-- Use PostgreSQL or another production database instead of SQLite.
-- Serve static files through a production-ready static file setup.
-- Configure structured logging for WeatherAI request failures and webhook receipts.
-- Put the app behind HTTPS, especially for webhook receiver URLs.
-
-Example Gunicorn command:
-
-```bash
-gunicorn config.wsgi:application --bind 0.0.0.0:8000 --workers 3
-```
 
 ## Troubleshooting
 - Generate your API key from `https://weather-ai.co/docs`
