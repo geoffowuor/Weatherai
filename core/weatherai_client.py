@@ -58,7 +58,7 @@ class WeatherAIClient:
 
     def get_weather(self, lat: float, lon: float, days: int = 7,
                     ai: bool = False, units: str = "metric", lang: str = "en"):
-        """GET /v1/weather — current conditions + forecast."""
+       
         return self._request("GET", "/v1/weather", params={
             "lat": lat, "lon": lon, "days": days,
             "ai": str(ai).lower(), "units": units, "lang": lang,
@@ -66,49 +66,47 @@ class WeatherAIClient:
 
     def get_current(self, lat: float, lon: float,
                     ai: bool = False, units: str = "metric"):
-        """GET /v1/current — present-moment conditions only."""
+      
         return self._request("GET", "/v1/current", params={
             "lat": lat, "lon": lon,
             "ai": str(ai).lower(), "units": units,
         })
 
     def get_weather_geo(self, ip: str = "auto", days: int = 7, ai: bool = False):
-        """GET /v1/weather-geo — weather with IP geo-detection."""
+       
         return self._request("GET", "/v1/weather-geo", params={
             "ip": ip, "days": days, "ai": str(ai).lower(),
         })
 
     def get_insights(self, lat: float, lon: float, days: int = 7,
                      units: str = "metric", lang: str = "en"):
-        """GET /v1/insights (Pro+) — AI-powered agronomic analysis."""
+     
         return self._request("GET", "/v1/insights", params={
             "lat": lat, "lon": lon, "days": days, "units": units, "lang": lang,
         })
 
     def get_usage(self):
-        """GET /v1/usage — billing period stats."""
+     
         return self._request("GET", "/v1/usage")
 
     def create_webhook(self, url: str, lat: float, lon: float,
                        triggers: list[str], timezone: str = "Africa/Nairobi"):
-        """POST /v1/webhooks (Pro+) — subscribe to weather trigger events."""
+        
         return self._request("POST", "/v1/webhooks", json={
             "url": url, "lat": lat, "lon": lon,
             "triggers": triggers, "timezone": timezone,
         })
 
-    def list_webhooks(self):
-        """GET /v1/webhooks (Pro+) — list active subscriptions."""
-        return self._request("GET", "/v1/webhooks")
+    def list_webhooks(self):  return self._request("GET", "/v1/webhooks")
 
     def delete_webhook(self, webhook_id: str):
-        """DEL /v1/webhooks/:id (Pro+)."""
+      
         return self._request("DELETE", f"/v1/webhooks/{webhook_id}")
 
     def analyze_trees(self, image_file, farmer_id: str = "",
                       county: str = "", land_acres: float = None,
                       location: str = "", notes: str = ""):
-        """POST /v1/trees/analyze — tree count + canopy health from image."""
+     
         files = {"image": image_file}
         data = {k: v for k, v in {
             "farmerId": farmer_id, "county": county,
