@@ -64,6 +64,7 @@ Add your WeatherAI key:
 
 ```env
 WEATHERAI_API_KEY=your_real_weatherai_api_key_here
+DJANGO_SECRET_KEY=your_real_django_secret_key_here
 ```
 
 Do not commit `.env`. It is already ignored by `.gitignore`.
@@ -344,6 +345,18 @@ For checks without external WeatherAI calls:
 ```bash
 python manage.py check
 ```
+
+## Production Environment
+
+Set these variables in your deployment environment:
+
+```env
+WEATHERAI_API_KEY=your_real_weatherai_api_key
+DJANGO_SECRET_KEY=your_real_django_secret_key
+DJANGO_SETTINGS_MODULE=config.settings
+```
+
+The app requires `DJANGO_SECRET_KEY` at startup. If it is missing, Django will fail fast instead of booting with an unsafe fallback key.
 
 
 
